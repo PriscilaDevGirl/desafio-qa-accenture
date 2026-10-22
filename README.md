@@ -51,7 +51,7 @@ Outras configurações: `BASE_URL` (padrão `https://demoqa.com`) e `WAIT_TIMEOU
 | Listar livros | Catálogo com pelo menos dois ISBNs diferentes |
 | Reservar dois livros | HTTP 201 e confirmação dos ISBNs selecionados |
 | Consultar usuário e livros | Identidade e conjunto exato dos dois ISBNs, com detalhes anexados ao relatório |
-| Practice Form | Todos os campos, valores aleatórios válidos, upload real de `.txt`, conteúdo do popup e fechamento |
+| Practice Form | Todos os campos, valores aleatórios válidos, upload real de `.txt`, conteúdo do popup e fechamento com Escape |
 | Browser Windows | Contagem de janelas, troca de contexto, mensagem e fechamento com retorno à janela original |
 | Web Tables | Inclusão, alteração de todos os campos e exclusão com validações |
 | Bônus Cucumber | Esquema de cenário com quantidade 12, dados exclusivos e validação de inclusão/exclusão de cada registro |
@@ -85,7 +85,7 @@ O hook final exclui o usuário criado pela API, inclusive quando um passo falha.
 
 Depois de executar, abra `reports/cucumber.html`. O JSON fica em `reports/cucumber.json`. Falhas de interface incluem uma captura de tela no relatório. Não registrar tokens ou senhas. Os relatórios usam dados sintéticos e não entram no Git.
 
-O DemoQA é um ambiente público externo. Falhas de rede, indisponibilidade, alterações no DOM ou anúncios que interceptam cliques podem afetar os testes. Os cenários usam o serviço real, sem substituir as respostas por mocks. Consulte `VALIDACAO.md` para os resultados obtidos neste ambiente e `BUGS.md` para os defeitos do site. O fechamento do popup apresenta um defeito confirmado: esse cenário permanece falhando e torna a execução completa e o workflow vermelhos enquanto o site não corrigir o problema.
+O DemoQA é um ambiente público externo. Falhas de rede, indisponibilidade, alterações no DOM ou anúncios que interceptam cliques podem afetar os testes. Os cenários usam o serviço real, sem substituir as respostas por mocks. Consulte `VALIDACAO.md` para os resultados obtidos neste ambiente e `BUGS.md` para os defeitos do site. O botão Close do popup apresenta um defeito confirmado. O cenário fecha o popup com Escape, uma alternativa funcional que atende ao enunciado.
 
 ## Entrega no GitHub
 

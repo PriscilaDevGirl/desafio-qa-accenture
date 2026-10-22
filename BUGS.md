@@ -22,15 +22,19 @@ Uncaught TypeError: Lr.findDOMNode is not a function
 
 O erro aparece em `https://demoqa.com/assets/index-D_rDx8ml.js`, linha 35. O handler do botão tenta executar `findDOMNode(...).reset()` antes de alterar a visibilidade do popup. A exceção interrompe essa sequência.
 
-**Impacto na automação:** preenchimento, upload `.txt`, envio e validação de todos os campos passam. A etapa final de fechamento falha. O teste mantém essa falha e a saída não zero para sinalizar o defeito. O relatório inclui screenshot e logs do console.
+**Alternativa validada:** Escape e clique fora do popup fecham o modal sem esse erro. O cenário do desafio agora usa Escape, pois o enunciado exige fechar o popup sem especificar o botão Close. Essa interação real satisfaz o fluxo sem alterar o estado da aplicação por JavaScript. O defeito do botão continua documentado e suas evidências originais foram preservadas.
+
+Em nova investigação, clique normal, Enter e Espaço no botão Close reproduziram o erro. Escape e clique no fundo fecharam o popup. Os resultados estão em [popup-alternatives.json](docs/evidencias/popup-alternatives.json).
 
 Evidências versionadas: [screenshot](docs/evidencias/BUG-01-popup.png) e [console](docs/evidencias/BUG-01-console.json).
 
-**Reprodução automatizada:**
+**Execução do cenário com a alternativa:**
 
 ```powershell
 npm.cmd run test:ui -- --name "Enviar o formulário completo"
 ```
+
+O comando acima executa o fluxo com a alternativa Escape e não reproduz o clique defeituoso. Para reproduzir o BUG-01, siga os passos manuais e clique no botão Close após enviar o formulário.
 
 ## BUG-02 — Uma exclusão remove outros registros adicionados
 

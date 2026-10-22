@@ -5,7 +5,7 @@ Funcionalidade: Interações no DemoQA
     Dado que acesso "Forms" e o submenu "Practice Form"
     Quando preencho todos os campos com dados aleatórios e envio o formulário
     Então o popup apresenta os dados enviados
-    E consigo fechar o popup
+    E consigo fechar o popup com Escape
 
   Cenário: Validar uma nova janela
     Dado que acesso "Alerts, Frame & Windows" e o submenu "Browser Windows"

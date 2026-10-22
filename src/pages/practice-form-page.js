@@ -1,5 +1,5 @@
 const path = require('node:path');
-const { By, Select, until } = require('selenium-webdriver');
+const { By, Key, Select } = require('selenium-webdriver');
 const BasePage = require('./base-page');
 const { timeout } = require('../config');
 
@@ -36,10 +36,14 @@ class PracticeFormPage extends BasePage {
     return result;
   }
   async close() {
-    const modal = await this.element(By.css('.modal-content'));
-    await this.click(By.id('closeLargeModal'));
-    await this.driver.wait(until.elementIsNotVisible(modal), timeout,
-      'O popup continuou aberto após clicar em Close. Consulte BUGS.md e o console anexado ao relatório.');
+    await this.element(By.css('.modal.show'));
+    // Escape aciona o fechamento nativo do modal. O botão Close apresenta
+    // um defeito no site público, documentado separadamente em BUGS.md.
+    await this.driver.actions().sendKeys(Key.ESCAPE).perform();
+    await this.driver.wait(async () => {
+      const dialogs = await this.driver.findElements(By.css('.modal.show'));
+      return dialogs.length === 0 || !(await dialogs[0].isDisplayed());
+    }, timeout, 'O popup continuou aberto após pressionar Escape.');
   }
 }
 

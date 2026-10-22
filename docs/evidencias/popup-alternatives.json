@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-10-22T21:18:43.279Z",
+  "results": [
+    {
+      "method": "click",
+      "closed": false,
+      "errors": [
+        "https://demoqa.com/assets/index-D_rDx8ml.js 35:57249 Uncaught TypeError: Lr.findDOMNode is not a function"
+      ]
+    },
+    {
+      "method": "keyboard-enter",
+      "closed": false,
+      "errors": [
+        "https://demoqa.com/assets/index-D_rDx8ml.js 35:57249 Uncaught TypeError: Lr.findDOMNode is not a function"
+      ]
+    },
+    {
+      "method": "keyboard-space",
+      "closed": false,
+      "errors": [
+        "https://demoqa.com/assets/index-D_rDx8ml.js 35:57249 Uncaught TypeError: Lr.findDOMNode is not a function"
+      ]
+    },
+    {
+      "method": "escape",
+      "closed": true,
+      "errors": []
+    },
+    {
+      "method": "backdrop",
+      "closed": true,
+      "errors": []
+    }
+  ]
+}

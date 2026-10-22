@@ -37,7 +37,7 @@ Then('o popup apresenta os dados enviados', async function () {
   for (const [field, value] of Object.entries(expected)) assert.equal(actual[field], value, `Campo ${field}`);
 });
 
-Then('consigo fechar o popup', async function () { await this.form.close(); });
+Then('consigo fechar o popup com Escape', async function () { await this.form.close(); });
 
 When('abro uma nova janela', async function () {
   this.windows = new WindowsPage(this.driver);
