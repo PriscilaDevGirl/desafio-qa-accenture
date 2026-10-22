@@ -41,6 +41,10 @@ npm.cmd run test:ui
 
 Outras configurações: `BASE_URL` (padrão `https://demoqa.com`) e `WAIT_TIMEOUT` (espera de elementos em milissegundos, padrão `15000`). Cada cenário de interface abre um navegador independente. Os cenários executam sequencialmente.
 
+## Executar a API no Postman
+
+Importe [`postman/Desafio-QA-Accenture.postman_collection.json`](postman/Desafio-QA-Accenture.postman_collection.json) e execute a coleção pelo **Run**, com uma iteração e as sete requisições na ordem. Os dados do usuário, token e ISBNs são preenchidos automaticamente. A última requisição exclui o usuário de teste. Consulte [as instruções do Postman](postman/README.md) para inspecionar os dados antes da limpeza ou executar a coleção com Newman.
+
 ## Cobertura do enunciado
 
 | Requisito | Implementação e validação |
@@ -74,6 +78,7 @@ src/
   config.js                   Configuração por variáveis de ambiente
   data.js                     Dados sintéticos exclusivos
 fixtures/upload.txt           Arquivo versionado para upload
+postman/                      Coleção de API e instruções de execução
 reports/                      Relatórios gerados, ignorados pelo Git
 ```
 
