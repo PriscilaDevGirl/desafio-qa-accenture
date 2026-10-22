@@ -7,7 +7,7 @@ Data: 22/10/2026. Ambiente: Windows, Node.js 24.14.1, Chrome 155, Selenium WebDr
 | `npm.cmd run check` | Sintaxe JavaScript válida |
 | `npm.cmd run test:dry` | Cenários e passos reconhecidos, sem passos indefinidos ou ambíguos |
 | `npm.cmd test` | 7 cenários e 34 passos aprovados, em aproximadamente 80 segundos |
-| `npm.cmd test` com `HEADLESS=false` | 7 cenários e 34 passos aprovados, em aproximadamente 101 segundos, após ajuste de viewport e cliques |
+| `npm.cmd test` com `HEADLESS=false` | 7 cenários e 34 passos aprovados, em aproximadamente 69 segundos, após sincronizar a conclusão e o reset da barra |
 | Coleção Postman com Newman | 7 requisições e 27 asserções aprovadas, em aproximadamente 5 segundos |
 
 ## Cobertura da interface
@@ -27,6 +27,7 @@ O fluxo de API validou criação, autenticação e autorização do usuário, se
 
 - O popup do formulário fecha com Escape. O botão Close apresenta o [BUG-01](defeitos.md).
 - O bônus confirmou a inclusão dos 12 emails. Um clique excluiu os 12 registros, comportamento registrado no BUG-02. A ausência de todos foi verificada ao final.
+- A barra aguarda 100% estáveis antes do reset e zero estável depois dele. O cenário passou em três execuções locais consecutivas e na suíte completa, com Chrome visível. O comportamento de temporização do site está registrado no BUG-03.
 - A execução local foi validada com Chrome headless e com janela visível. A configuração de Edge está disponível, mas não fez parte dessa validação.
 - O workflow do GitHub Actions usa Linux e Node.js 22. Seu resultado deve ser consultado na aba Actions do repositório.
 

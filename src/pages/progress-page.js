@@ -13,12 +13,27 @@ class ProgressPage extends BasePage {
     await this.click(By.id('startStopButton'));
   }
   async label() { return (await this.element(By.id('startStopButton'))).getText(); }
+  async waitForStableValue(expected, waitTimeout = timeout) {
+    let stableSince;
+    await this.driver.wait(async () => {
+      if ((await this.value()) !== expected) {
+        stableSince = undefined;
+        return false;
+      }
+      stableSince ??= Date.now();
+      return Date.now() - stableSince >= 300;
+    }, waitTimeout, `A barra não permaneceu estável em ${expected}%.`, 50);
+  }
   async finish() {
     await this.click(By.id('startStopButton'));
-    await this.driver.wait(async () => (await this.value()) === 100, 30000, 'A barra não chegou a 100%', 100);
+    // O site exibe 100% um ciclo antes de encerrar o intervalo de 100 ms.
+    await this.waitForStableValue(100, 30000);
     await this.element(By.id('resetButton'));
   }
-  async reset() { await this.click(By.id('resetButton')); }
+  async reset() {
+    await this.click(By.id('resetButton'));
+    await this.waitForStableValue(0);
+  }
 }
 
 module.exports = ProgressPage;

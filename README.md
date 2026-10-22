@@ -75,7 +75,7 @@ Validação registrada: **7 cenários e 34 passos aprovados** na suíte Cucumber
 
 O relatório Cucumber é gerado em `reports/cucumber.html`. Falhas de interface incluem screenshot e logs do console. Relatórios, dependências e caches ficam fora do Git.
 
-O DemoQA apresenta dois comportamentos documentados: o botão Close do formulário gera um erro, por isso o teste fecha o popup com Escape; a exclusão de um registro pode remover outros registros adicionados. Os passos de reprodução e as evidências estão em [defeitos conhecidos](docs/defeitos.md).
+O DemoQA apresenta comportamentos documentados no fechamento do formulário, na exclusão de registros e no reset da barra de progresso. O teste usa Escape no formulário, verifica os registros antes de excluir e aguarda a conclusão estável da barra antes do reset. Os passos de reprodução e as evidências estão em [defeitos conhecidos](docs/defeitos.md).
 
 ## Referências
 

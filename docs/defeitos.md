@@ -44,3 +44,17 @@ O handler do botão tenta executar `findDOMNode(...).reset()` antes de fechar o 
 **Diagnóstico:** as colunas usam `useMemo(..., [])`; o handler de exclusão capturado usa a coleção inicial para calcular o próximo estado, descartando as inclusões posteriores.
 
 **Tratamento no teste:** validar os 12 registros antes da exclusão, conferir a existência antes de cada clique e verificar que nenhum permanece ao final. O relatório registra os cliques e os registros já ausentes. Na validação, houve um clique e 11 registros já ausentes. O resultado do bônus confirma a remoção dos 12 registros; não comprova a correção da exclusão individual do produto.
+
+## BUG-03 — Reset imediato em 100% pode reiniciar o progresso
+
+**Página:** https://demoqa.com/progress-bar
+
+**Reprodução:** iniciar a barra e clicar em Reset assim que o valor visível chegar a 100%.
+
+**Esperado:** o valor volta a zero e permanece parado.
+
+**Observado:** em algumas execuções, o valor volta a crescer e a validação encontra 1% após o reset.
+
+**Diagnóstico:** o componente incrementa o contador a cada 100 ms e só encerra o intervalo quando o contador interno ultrapassa 100. A interface já apresenta 100% antes disso. O handler de Reset zera o contador, mas não cancela o intervalo pendente.
+
+**Tratamento no teste:** aguardar 100% estáveis por 300 ms antes de clicar em Reset e verificar zero estável pelo mesmo período. A validação final continua exigindo exatamente zero.
