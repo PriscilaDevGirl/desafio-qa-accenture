@@ -1,0 +1,19 @@
+{
+  "name": "desafio-qa-accenture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Automação DemoQA de API e interface com Selenium e Cucumber",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:api": "cucumber-js --tags @api",
+    "test:ui": "cucumber-js --tags @ui",
+    "test:bonus": "cucumber-js --tags @bonus",
+    "test:dry": "cucumber-js --dry-run",
+    "check": "node scripts/check.js"
+  },
+  "engines": { "node": ">=22" },
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.0.0",
+    "selenium-webdriver": "^4.35.0"
+  }
+}

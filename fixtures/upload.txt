@@ -1,0 +1,2 @@
+Arquivo de texto utilizado no desafio QA Automation da Accenture.
+Este arquivo faz parte do projeto e deve acompanhar a entrega no GitHub.

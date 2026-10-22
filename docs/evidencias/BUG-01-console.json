@@ -1,0 +1,6 @@
+[
+  {
+    "level": "SEVERE",
+    "message": "https://demoqa.com/assets/index-D_rDx8ml.js 35:57249 Uncaught TypeError: Lr.findDOMNode is not a function"
+  }
+]
