@@ -1,8 +1,18 @@
 const { randomUUID, randomInt } = require('node:crypto');
 
+const citiesByState = {
+  NCR: ['Delhi', 'Gurgaon', 'Noida'],
+  'Uttar Pradesh': ['Agra', 'Lucknow', 'Merrut'],
+  Haryana: ['Karnal', 'Panipat'],
+  Rajasthan: ['Jaipur', 'Jaiselmer']
+};
+const states = Object.keys(citiesByState);
+
 function person() {
   const id = randomUUID().replaceAll('-', '');
   const letters = id.replace(/[0-9]/g, digit => String.fromCharCode(97 + Number(digit)));
+  const state = states[randomInt(states.length)];
+  const cities = citiesByState[state];
   return {
     firstName: `Ana${letters.slice(0, 8)}`,
     lastName: `Silva${letters.slice(8, 16)}`,
@@ -18,8 +28,8 @@ function person() {
     birthYear: String(randomInt(1980, 2006)),
     subject: ['Maths', 'English', 'Physics'][randomInt(0, 3)],
     hobby: ['Sports', 'Reading', 'Music'][randomInt(0, 3)],
-    state: 'NCR',
-    city: ['Delhi', 'Gurgaon', 'Noida'][randomInt(0, 3)]
+    state,
+    city: cities[randomInt(cities.length)]
   };
 }
 

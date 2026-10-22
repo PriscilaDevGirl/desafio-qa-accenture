@@ -47,3 +47,7 @@ Os relatórios ficam fora do Git e refletem a última execução. As evidências
 A janela visível podia ter tamanho inferior ao solicitado pelo WebDriver, deixando o rodapé e a coluna lateral sobre os controles. A sessão agora fixa o viewport desktop em 1920×1080 pelo Chrome DevTools Protocol. A navegação seleciona o cartão da categoria e os cliques aguardam o elemento ficar livre de sobreposição, com rolagem imediata e clique nativo do WebDriver. Os serviços externos de publicidade e rastreamento do Google são bloqueados na sessão de teste.
 
 A suíte completa passou localmente com `HEADLESS=false` após essas alterações. O relatório `reports/cucumber.html` dessa execução mostra os sete cenários aprovados.
+
+## Aleatoriedade de estado e cidade
+
+O formulário passou a sortear o estado entre NCR, Uttar Pradesh, Haryana e Rajasthan e a cidade entre as opções correspondentes. Uma validação local com Chrome visível preencheu e enviou o formulário com uma combinação sorteada de cada estado, conferiu o estado e a cidade apresentados no popup e fechou o modal com Escape. Os quatro estados foram aprovados. As grafias das cidades seguem as opções exibidas pelo DemoQA.

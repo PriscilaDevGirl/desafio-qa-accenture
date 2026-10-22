@@ -65,6 +65,8 @@ reports/            Relatórios gerados durante a execução
 
 Os cenários usam dados sintéticos exclusivos. Cada cenário de interface abre seu próprio navegador. O fluxo de API exclui o usuário de teste ao terminar. O arquivo de upload acompanha o projeto em `fixtures/upload.txt`.
 
+No formulário, o estado é sorteado entre NCR, Uttar Pradesh, Haryana e Rajasthan. A cidade é sorteada entre as opções válidas do estado escolhido.
+
 ## Postman
 
 Importe a [coleção](postman/Desafio-QA-Accenture.postman_collection.json) e execute as sete requisições em ordem pelo Runner. Usuário, token e ISBNs são preenchidos automaticamente. A última requisição exclui o usuário criado. Consulte as [instruções do Postman](postman/README.md).
