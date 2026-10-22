@@ -49,8 +49,6 @@ O Newman executa a própria coleção e suas asserções, sem depender dos teste
 
 Em 22/10/2026, a coleção foi executada contra o DemoQA com Newman: **sete requisições e 27 asserções aprovadas**, sem falhas, em aproximadamente cinco segundos. A exclusão final retornou HTTP 204. Os scripts de pré-requisição e testes também tiveram a sintaxe validada. O relatório completo local está em `reports/postman.json` e fica fora do Git, pois pode conter dados de autenticação da execução.
 
-A validação usou o executor Newman. A importação na interface gráfica do Postman não foi executada neste ambiente.
-
 ## Documentação de referência
 
 - [Collection Runner](https://learning.postman.com/docs/tests-and-scripts/running-collections/intro-to-collection-runs/)

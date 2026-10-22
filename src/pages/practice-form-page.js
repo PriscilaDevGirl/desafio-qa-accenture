@@ -38,7 +38,7 @@ class PracticeFormPage extends BasePage {
   async close() {
     await this.element(By.css('.modal.show'));
     // Escape aciona o fechamento nativo do modal. O botão Close apresenta
-    // um defeito no site público, documentado separadamente em BUGS.md.
+    // um defeito no site público, documentado em docs/defeitos.md.
     await this.driver.actions().sendKeys(Key.ESCAPE).perform();
     await this.driver.wait(async () => {
       const dialogs = await this.driver.findElements(By.css('.modal.show'));

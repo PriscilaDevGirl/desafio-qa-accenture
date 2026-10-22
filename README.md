@@ -1,111 +1,81 @@
 # Desafio QA Automation — Accenture
 
-Solução em JavaScript com Selenium WebDriver, Cucumber (BDD em português) e Page Objects. O enunciado original está em `Desafio_QA (004) (1).pptx`.
+Testes de API e interface do [DemoQA](https://demoqa.com/) em JavaScript, com Selenium WebDriver, Cucumber e Page Objects. A coleção Postman executa o mesmo fluxo de API.
 
-## Pré-requisitos e execução
+## Execução rápida
 
-- Node.js 22 ou superior e npm.
-- Google Chrome instalado. Alternativamente, Microsoft Edge.
-- Internet para instalar dependências, obter o driver pelo Selenium Manager e acessar o DemoQA.
-
-Na pasta do projeto:
+Requisitos: Node.js 22 ou superior, npm, Google Chrome e acesso à internet.
 
 ```powershell
 npm.cmd ci
 npm.cmd test
 ```
 
-No Windows, `npm.cmd` funciona mesmo quando a política do PowerShell bloqueia `npm.ps1`. Em Linux/macOS, use `npm`.
+No Windows, use `npm.cmd` para evitar bloqueios do `npm.ps1` pela política do PowerShell. Em Linux/macOS, use `npm`.
 
-```powershell
-npm.cmd run test:api    # Fluxo de API completo, em um único cenário
-npm.cmd run test:ui     # Interface, incluindo o bônus
-npm.cmd run test:bonus  # Criar, validar e excluir 12 registros
-npm.cmd run test:dry    # Validar o vínculo dos passos sem acessar o site
-npm.cmd run check       # Validar a sintaxe JavaScript
-```
-
-A execução padrão usa Chrome headless. Para acompanhar as interações:
+O navegador executa em modo headless. Para acompanhar a interface:
 
 ```powershell
 $env:HEADLESS = 'false'
 npm.cmd run test:ui
 ```
 
-Para usar Edge:
+O passo a passo de instalação, configuração e execução está no [guia de execução](GUIA_EXECUCAO.md).
 
-```powershell
-$env:BROWSER = 'edge'
-npm.cmd run test:ui
-```
+## Comandos
 
-Outras configurações: `BASE_URL` (padrão `https://demoqa.com`) e `WAIT_TIMEOUT` (espera de elementos em milissegundos, padrão `15000`). Cada cenário de interface abre um navegador independente. Os cenários executam sequencialmente.
-
-## Executar a API no Postman
-
-Importe [`postman/Desafio-QA-Accenture.postman_collection.json`](postman/Desafio-QA-Accenture.postman_collection.json) e execute a coleção pelo **Run**, com uma iteração e as sete requisições na ordem. Os dados do usuário, token e ISBNs são preenchidos automaticamente. A última requisição exclui o usuário de teste. Consulte [as instruções do Postman](postman/README.md) para inspecionar os dados antes da limpeza ou executar a coleção com Newman.
-
-## Cobertura do enunciado
-
-| Requisito | Implementação e validação |
+| Comando | Escopo |
 | --- | --- |
-| Criar usuário | Nome exclusivo, HTTP 201, identificador, nome e coleção inicial vazia |
-| Gerar token | HTTP 200, status de sucesso, token não vazio e expiração futura |
-| Confirmar autorização | Resposta booleana `true` |
-| Listar livros | Catálogo com pelo menos dois ISBNs diferentes |
-| Reservar dois livros | HTTP 201 e confirmação dos ISBNs selecionados |
-| Consultar usuário e livros | Identidade e conjunto exato dos dois ISBNs, com detalhes anexados ao relatório |
-| Practice Form | Todos os campos, valores aleatórios válidos, upload real de `.txt`, conteúdo do popup e fechamento com Escape |
-| Browser Windows | Contagem de janelas, troca de contexto, mensagem e fechamento com retorno à janela original |
-| Web Tables | Inclusão, alteração de todos os campos e exclusão com validações |
-| Bônus Cucumber | Esquema de cenário com quantidade 12, dados exclusivos e validação de inclusão/exclusão de cada registro |
-| Progress Bar | Pausa antecipada, valor entre 1 e 25, estado Start, conclusão em 100 e reset para zero |
-| Sortable | Movimento real pelo mouse, desordenação inicial e ordenação crescente validada |
+| `npm.cmd test` | Suíte completa |
+| `npm.cmd run test:api` | Fluxo de API |
+| `npm.cmd run test:ui` | Interface, incluindo o bônus |
+| `npm.cmd run test:bonus` | Inclusão e exclusão de 12 registros |
+| `npm.cmd run test:dry` | Conferência dos passos BDD, sem acessar o site |
+| `npm.cmd run check` | Validação da sintaxe JavaScript |
 
-O estado e a cidade do formulário respeitam as opções dependentes do DemoQA. Os demais dados variam a cada execução. O arquivo de upload está em `fixtures/upload.txt`.
+## Cobertura
 
-## Organização
+| Fluxo | Verificações |
+| --- | --- |
+| API | Criar usuário, gerar token, autorizar, listar o catálogo, reservar dois livros e consultar o usuário com os livros escolhidos |
+| Practice Form | Preencher todos os campos, enviar o arquivo `.txt`, validar os dados no popup e fechar com Escape |
+| Browser Windows | Abrir uma janela, validar a mensagem e retornar à janela original |
+| Web Tables | Criar, editar e excluir um registro |
+| Bônus | Criar 12 registros exclusivos, conferir a inclusão e verificar a exclusão de todos |
+| Progress Bar | Parar até 25%, retomar até 100% e resetar para zero |
+| Sortable | Ordenar a lista por drag and drop |
+
+## Estrutura
 
 ```text
-features/
-  api.feature                 Fluxo de reserva em BDD
-  interface.feature           Cenários de navegador e bônus
-  step_definitions/           Passos e asserções dos resultados
-  support/                    Contexto isolado, navegador e limpeza
-src/
-  api/bookstore-client.js     Cliente HTTP com validação dos status
-  pages/                      Interações e seletores por página
-  config.js                   Configuração por variáveis de ambiente
-  data.js                     Dados sintéticos exclusivos
-fixtures/upload.txt           Arquivo versionado para upload
-postman/                      Coleção de API e instruções de execução
-reports/                      Relatórios gerados, ignorados pelo Git
+.github/workflows/   Execução no GitHub Actions
+docs/               Enunciado, validação e defeitos conhecidos
+features/           Cenários BDD, steps e hooks
+fixtures/           Arquivo de upload
+postman/            Coleção e instruções do Postman
+scripts/            Verificação de sintaxe
+src/api/            Cliente HTTP
+src/pages/          Page Objects
+reports/            Relatórios gerados durante a execução
 ```
 
-Os passos expressam o comportamento e validam os resultados. Os Page Objects concentram as interações e os seletores. O cliente de API usa `fetch` nativo, sem depender de um navegador. As esperas de elementos e de progresso usam condições, sem pausas fixas para carregamento. As pequenas pausas nos gestos de mouse permitem executar o arraste.
+Os cenários usam dados sintéticos exclusivos. Cada cenário de interface abre seu próprio navegador. O fluxo de API exclui o usuário de teste ao terminar. O arquivo de upload acompanha o projeto em `fixtures/upload.txt`.
 
-O hook final exclui o usuário criado pela API, inclusive quando um passo falha. O teste de tabelas exclui apenas os próprios registros e mantém os registros preexistentes. Cada página de tabelas tem estado local do navegador. A busca por email permite conferir os 12 registros mesmo com paginação.
+## Postman
 
-## Relatórios e diagnóstico
+Importe a [coleção](postman/Desafio-QA-Accenture.postman_collection.json) e execute as sete requisições em ordem pelo Runner. Usuário, token e ISBNs são preenchidos automaticamente. A última requisição exclui o usuário criado. Consulte as [instruções do Postman](postman/README.md).
 
-Depois de executar, abra `reports/cucumber.html`. O JSON fica em `reports/cucumber.json`. Falhas de interface incluem uma captura de tela no relatório. Não registrar tokens ou senhas. Os relatórios usam dados sintéticos e não entram no Git.
+## Resultados e observações
 
-O DemoQA é um ambiente público externo. Falhas de rede, indisponibilidade, alterações no DOM ou anúncios que interceptam cliques podem afetar os testes. Os cenários usam o serviço real, sem substituir as respostas por mocks. Consulte `VALIDACAO.md` para os resultados obtidos neste ambiente e `BUGS.md` para os defeitos do site. O botão Close do popup apresenta um defeito confirmado. O cenário fecha o popup com Escape, uma alternativa funcional que atende ao enunciado.
+Validação registrada: **7 cenários e 34 passos aprovados** na suíte Cucumber e **7 requisições e 27 asserções aprovadas** na coleção Postman com Newman. Veja os [resultados](docs/validacao.md).
 
-## Entrega no GitHub
+O relatório Cucumber é gerado em `reports/cucumber.html`. Falhas de interface incluem screenshot e logs do console. Relatórios, dependências e caches ficam fora do Git.
 
-O projeto possui versionamento Git local. Para publicar, crie um repositório vazio na sua conta e, nesta pasta, execute os comandos abaixo, substituindo a URL pelo seu repositório:
-
-```powershell
-git branch -M main
-git remote add origin https://github.com/SEU_USUARIO/desafio-qa-accenture.git
-git push -u origin main
-```
-
-O `.gitignore` exclui dependências, caches, relatórios e arquivos `.env`. Inclua o código, `package-lock.json`, o arquivo `.txt` e este README na entrega. Compartilhe o link do repositório com o avaliador.
+O DemoQA apresenta dois comportamentos documentados: o botão Close do formulário gera um erro, por isso o teste fecha o popup com Escape; a exclusão de um registro pode remover outros registros adicionados. Os passos de reprodução e as evidências estão em [defeitos conhecidos](docs/defeitos.md).
 
 ## Referências
 
+- [Enunciado](docs/enunciado.pptx)
 - [Swagger do DemoQA](https://demoqa.com/swagger/)
 - [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/)
 - [Cucumber.js](https://github.com/cucumber/cucumber-js)
