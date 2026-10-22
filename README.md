@@ -22,6 +22,10 @@ npm.cmd run test:ui
 
 O passo a passo de instalação, configuração e execução está no [guia de execução](GUIA_EXECUCAO.md).
 
+A área da página é fixada em 1920×1080, inclusive com o navegador visível, para manter o layout desktop em monitores menores. Os cliques aguardam o elemento estar disponível e sem sobreposição.
+
+As sessões de teste bloqueiam os serviços de publicidade e rastreamento do Google carregados pelo site. Os fluxos e as chamadas de API do DemoQA continuam usando o ambiente real.
+
 ## Comandos
 
 | Comando | Escopo |

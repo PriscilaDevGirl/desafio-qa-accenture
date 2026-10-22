@@ -17,6 +17,20 @@ Before({ tags: '@ui' }, async function () {
   builder = browser === 'chrome' ? builder.setChromeOptions(options) : builder.setEdgeOptions(options);
   this.driver = await builder.build();
   await this.driver.manage().setTimeouts({ implicit: 0, pageLoad: 45000, script: timeout });
+  // A janela visível pode ser limitada pelo monitor. Fixar o viewport mantém
+  // o mesmo layout desktop nos modos visível e headless.
+  await this.driver.sendDevToolsCommand('Emulation.setDeviceMetricsOverride', {
+    width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false
+  });
+  // Publicidade e rastreamento não fazem parte dos fluxos do desafio.
+  await this.driver.sendDevToolsCommand('Network.enable', {});
+  await this.driver.sendDevToolsCommand('Network.setBlockedURLs', {
+    urls: [
+      '*://*.googletagservices.com/*', '*://*.googlesyndication.com/*',
+      '*://*.doubleclick.net/*', '*://*.googletagmanager.com/*',
+      '*://*.google-analytics.com/*'
+    ]
+  });
   this.navigation = new BasePage(this.driver);
 });
 

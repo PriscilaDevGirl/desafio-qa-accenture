@@ -43,6 +43,10 @@ Para voltar ao modo headless:
 $env:HEADLESS = 'true'
 ```
 
+A área da página é padronizada em 1920×1080 nos dois modos. Isso evita que uma janela menor altere o layout e deixe os controles encobertos pelo rodapé ou pela coluna lateral do DemoQA. O tamanho externo da janela pode ser limitado pelo monitor.
+
+Os serviços de publicidade e rastreamento do Google são bloqueados na sessão dos testes para reduzir interferências externas. Esse bloqueio não substitui as respostas da aplicação ou da API.
+
 ## 4. Executar uma parte do desafio
 
 ```powershell
@@ -118,4 +122,5 @@ As variáveis definidas dessa forma valem para a sessão atual do PowerShell. A 
 | Dependências ausentes | Execute `npm.cmd ci` na raiz do projeto |
 | Driver não é obtido | Confira a instalação do navegador e o acesso à internet |
 | Timeout ou falha do DemoQA | Confira o relatório, os logs e a disponibilidade do site |
+| Clique interceptado pelo rodapé ou pela coluna lateral | Confira se está usando a versão atual, que padroniza o viewport e aguarda o elemento ficar livre para clique |
 | Relatório mostra apenas um cenário | A última execução selecionou um grupo; execute `npm.cmd test` para gerar o relatório completo |

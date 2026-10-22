@@ -23,7 +23,7 @@ class WebTablesPage extends BasePage {
   }
   async edit(previousEmail, data) {
     const row = await this.row(previousEmail);
-    await (await row.findElement(By.css('[title="Edit"]'))).click();
+    await this.clickElement(await row.findElement(By.css('[title="Edit"]')));
     await this.save(data);
   }
   async cells(email) {
@@ -32,7 +32,7 @@ class WebTablesPage extends BasePage {
   }
   async remove(email) {
     const row = await this.row(email);
-    await (await row.findElement(By.css('[title="Delete"]'))).click();
+    await this.clickElement(await row.findElement(By.css('[title="Delete"]')));
     await this.driver.wait(async () => !(await this.exists(email)), timeout);
   }
   async exists(email) {
