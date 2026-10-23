@@ -91,7 +91,7 @@ O DemoQA apresenta comportamentos documentados no fechamento do formulário, na 
 
 ## Referências
 
-- [Enunciado](docs/enunciado.pptx)
+
 - [Swagger do DemoQA](https://demoqa.com/swagger/)
 - [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/)
 - [Cucumber.js](https://github.com/cucumber/cucumber-js)
