@@ -61,7 +61,7 @@ As sessões de teste bloqueiam os serviços de publicidade e rastreamento do Goo
 
 ```text
 .github/workflows/   Execução no GitHub Actions
-docs/               Enunciado, validação e defeitos conhecidos
+docs/               Validação e defeitos conhecidos
 desafio-api-1/      API, steps, cenário BDD e coleção Postman
 desafio-frontend-2/ Frontend, steps, cenários BDD, Page Objects e upload
 shared/            Configuração, dados sintéticos e ocultação de credenciais
