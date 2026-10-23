@@ -21,9 +21,13 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run test:dry
-      - run: npm test
+      - run: npm run evidencias
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cucumber-reports
-          path: reports/
+          name: evidencias-desafio-api-1-e-frontend-2
+          path: |
+            evidencias/
+            reports/*.html
+            reports/desafio-api-1.json
+            reports/desafio-frontend-2.json

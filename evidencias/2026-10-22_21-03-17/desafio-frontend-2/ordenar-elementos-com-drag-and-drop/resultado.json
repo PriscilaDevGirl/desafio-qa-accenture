@@ -1,0 +1,21 @@
+{
+  "scenario": "Ordenar elementos com drag and drop",
+  "status": "passed",
+  "steps": [
+    {
+      "step": "que acesso \"Interactions\" e o submenu \"Sortable\"",
+      "status": "passed",
+      "screenshot": "01-que-acesso-interactions-e-o-submenu-sortable.png"
+    },
+    {
+      "step": "ordeno os elementos com drag and drop",
+      "status": "passed",
+      "screenshot": "02-ordeno-os-elementos-com-drag-and-drop.png"
+    },
+    {
+      "step": "os elementos aparecem em ordem crescente",
+      "status": "passed",
+      "screenshot": "03-os-elementos-aparecem-em-ordem-crescente.png"
+    }
+  ]
+}

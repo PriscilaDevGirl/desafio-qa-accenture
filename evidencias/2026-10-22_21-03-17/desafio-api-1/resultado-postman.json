@@ -1,0 +1,177 @@
+{
+  "title": "Coleção Postman — Desafio API 1",
+  "status": "passed",
+  "exitCode": 0,
+  "requests": [
+    {
+      "name": "01 — Criar usuário exclusivo",
+      "method": "POST",
+      "status": 201,
+      "durationMs": 1431,
+      "assertions": [
+        {
+          "name": "HTTP 201",
+          "status": "passed"
+        },
+        {
+          "name": "Resposta em JSON",
+          "status": "passed"
+        },
+        {
+          "name": "Identificador do usuário preenchido",
+          "status": "passed"
+        },
+        {
+          "name": "Nome do usuário corresponde ao enviado",
+          "status": "passed"
+        },
+        {
+          "name": "Usuário começa sem livros",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "02 — Gerar token de acesso",
+      "method": "POST",
+      "status": 200,
+      "durationMs": 1007,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Resposta em JSON",
+          "status": "passed"
+        },
+        {
+          "name": "Token gerado com sucesso",
+          "status": "passed"
+        },
+        {
+          "name": "Token preenchido",
+          "status": "passed"
+        },
+        {
+          "name": "Token possui expiração futura",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "03 — Confirmar autorização",
+      "method": "POST",
+      "status": 200,
+      "durationMs": 420,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Resposta em JSON",
+          "status": "passed"
+        },
+        {
+          "name": "Usuário autorizado",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "04 — Listar livros e selecionar dois ISBNs",
+      "method": "GET",
+      "status": 200,
+      "durationMs": 226,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Resposta em JSON",
+          "status": "passed"
+        },
+        {
+          "name": "Catálogo é uma lista",
+          "status": "passed"
+        },
+        {
+          "name": "Há pelo menos dois ISBNs diferentes",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "05 — Reservar dois livros",
+      "method": "POST",
+      "status": 201,
+      "durationMs": 425,
+      "assertions": [
+        {
+          "name": "HTTP 201",
+          "status": "passed"
+        },
+        {
+          "name": "Resposta em JSON",
+          "status": "passed"
+        },
+        {
+          "name": "Reserva contém exatamente os dois ISBNs selecionados",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "06 — Consultar usuário e validar livros reservados",
+      "method": "GET",
+      "status": 200,
+      "durationMs": 422,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Resposta em JSON",
+          "status": "passed"
+        },
+        {
+          "name": "Identificador corresponde ao usuário criado",
+          "status": "passed"
+        },
+        {
+          "name": "Nome corresponde ao usuário criado",
+          "status": "passed"
+        },
+        {
+          "name": "Usuário tem exatamente os dois livros reservados",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "07 — Limpeza: excluir usuário de teste",
+      "method": "DELETE",
+      "status": 204,
+      "durationMs": 624,
+      "assertions": [
+        {
+          "name": "HTTP 204",
+          "status": "passed"
+        },
+        {
+          "name": "Exclusão não retorna corpo",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "totalRequests": 7,
+  "assertions": {
+    "total": 27,
+    "pending": 0,
+    "failed": 0
+  }
+}

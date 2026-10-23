@@ -1,0 +1,36 @@
+{
+  "scenario": "Criar, editar e excluir um registro",
+  "status": "passed",
+  "steps": [
+    {
+      "step": "que acesso \"Elements\" e o submenu \"Web Tables\"",
+      "status": "passed",
+      "screenshot": "01-que-acesso-elements-e-o-submenu-web-tables.png"
+    },
+    {
+      "step": "crio um registro na tabela",
+      "status": "passed",
+      "screenshot": "02-crio-um-registro-na-tabela.png"
+    },
+    {
+      "step": "edito os dados desse registro",
+      "status": "passed",
+      "screenshot": "03-edito-os-dados-desse-registro.png"
+    },
+    {
+      "step": "a tabela apresenta os dados atualizados",
+      "status": "passed",
+      "screenshot": "04-a-tabela-apresenta-os-dados-atualizados.png"
+    },
+    {
+      "step": "excluo esse registro",
+      "status": "passed",
+      "screenshot": "05-excluo-esse-registro.png"
+    },
+    {
+      "step": "esse registro não aparece mais na tabela",
+      "status": "passed",
+      "screenshot": "06-esse-registro-nao-aparece-mais-na-tabela.png"
+    }
+  ]
+}

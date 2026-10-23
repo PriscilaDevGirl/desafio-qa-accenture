@@ -1,0 +1,26 @@
+{
+  "scenario": "Validar uma nova janela",
+  "status": "passed",
+  "steps": [
+    {
+      "step": "que acesso \"Alerts, Frame & Windows\" e o submenu \"Browser Windows\"",
+      "status": "passed",
+      "screenshot": "01-que-acesso-alerts-frame-windows-e-o-submenu-browser-win.png"
+    },
+    {
+      "step": "abro uma nova janela",
+      "status": "passed",
+      "screenshot": "02-abro-uma-nova-janela.png"
+    },
+    {
+      "step": "a nova janela apresenta a mensagem \"This is a sample page\"",
+      "status": "passed",
+      "screenshot": "03-a-nova-janela-apresenta-a-mensagem-this-is-a-sample-pag.png"
+    },
+    {
+      "step": "fecho a nova janela e retorno à original",
+      "status": "passed",
+      "screenshot": "04-fecho-a-nova-janela-e-retorno-a-original.png"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "scenario": "Enviar o formulário completo",
+  "status": "passed",
+  "steps": [
+    {
+      "step": "que acesso \"Forms\" e o submenu \"Practice Form\"",
+      "status": "passed",
+      "screenshot": "01-que-acesso-forms-e-o-submenu-practice-form.png"
+    },
+    {
+      "step": "preencho todos os campos com dados aleatórios e envio o formulário",
+      "status": "passed",
+      "screenshot": "02-preencho-todos-os-campos-com-dados-aleatorios-e-envio-o.png"
+    },
+    {
+      "step": "o popup apresenta os dados enviados",
+      "status": "passed",
+      "screenshot": "03-o-popup-apresenta-os-dados-enviados.png"
+    },
+    {
+      "step": "consigo fechar o popup com Escape",
+      "status": "passed",
+      "screenshot": "04-consigo-fechar-o-popup-com-escape.png"
+    }
+  ]
+}

@@ -5,9 +5,11 @@
   "description": "Automação DemoQA de API e interface com Selenium e Cucumber",
   "scripts": {
     "test": "cucumber-js",
-    "test:api": "cucumber-js --tags @api",
-    "test:ui": "cucumber-js --tags @ui",
-    "test:bonus": "cucumber-js --tags @bonus",
+    "test:api": "cucumber-js --profile api",
+    "test:ui": "cucumber-js --profile frontend",
+    "test:frontend": "cucumber-js --profile frontend",
+    "test:bonus": "cucumber-js --profile frontend --tags @bonus",
+    "evidencias": "node scripts/generate-evidence.js",
     "test:dry": "cucumber-js --dry-run",
     "check": "node scripts/check.js"
   },

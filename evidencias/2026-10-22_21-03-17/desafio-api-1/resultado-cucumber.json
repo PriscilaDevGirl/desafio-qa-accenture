@@ -1,0 +1,47 @@
+{
+  "title": "Desafio API 1",
+  "status": "passed",
+  "exitCode": 0,
+  "scenarios": [
+    {
+      "name": "Criar e autorizar um usuário e reservar dois livros",
+      "status": "passed",
+      "steps": [
+        {
+          "step": "Dado que criei um usuário exclusivo pela API",
+          "status": "passed",
+          "durationMs": 1507
+        },
+        {
+          "step": "Quando gero um token de acesso",
+          "status": "passed",
+          "durationMs": 1626
+        },
+        {
+          "step": "Então a API confirma que o usuário está autorizado",
+          "status": "passed",
+          "durationMs": 613
+        },
+        {
+          "step": "Quando consulto os livros disponíveis",
+          "status": "passed",
+          "durationMs": 206
+        },
+        {
+          "step": "E reservo dois livros diferentes do catálogo",
+          "status": "passed",
+          "durationMs": 407
+        },
+        {
+          "step": "Então os detalhes do usuário contêm exatamente os livros reservados",
+          "status": "passed",
+          "durationMs": 308
+        }
+      ]
+    }
+  ],
+  "totalScenarios": 1,
+  "passedScenarios": 1,
+  "totalSteps": 6,
+  "passedSteps": 6
+}

@@ -1,0 +1,36 @@
+{
+  "scenario": "Parar e reiniciar a barra de progresso",
+  "status": "passed",
+  "steps": [
+    {
+      "step": "que acesso \"Widgets\" e o submenu \"Progress Bar\"",
+      "status": "passed",
+      "screenshot": "01-que-acesso-widgets-e-o-submenu-progress-bar.png"
+    },
+    {
+      "step": "inicio e paro a barra antes de vinte e cinco por cento",
+      "status": "passed",
+      "screenshot": "02-inicio-e-paro-a-barra-antes-de-vinte-e-cinco-por-cento.png"
+    },
+    {
+      "step": "a barra está parada com valor menor ou igual a vinte e cinco",
+      "status": "passed",
+      "screenshot": "03-a-barra-esta-parada-com-valor-menor-ou-igual-a-vinte-e-.png"
+    },
+    {
+      "step": "reinicio a barra e aguardo cem por cento",
+      "status": "passed",
+      "screenshot": "04-reinicio-a-barra-e-aguardo-cem-por-cento.png"
+    },
+    {
+      "step": "reseto a barra de progresso",
+      "status": "passed",
+      "screenshot": "05-reseto-a-barra-de-progresso.png"
+    },
+    {
+      "step": "a barra volta a zero",
+      "status": "passed",
+      "screenshot": "06-a-barra-volta-a-zero.png"
+    }
+  ]
+}

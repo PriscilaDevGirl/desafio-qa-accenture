@@ -51,9 +51,11 @@ Os serviços de publicidade e rastreamento do Google são bloqueados na sessão 
 
 ```powershell
 npm.cmd run test:api
-npm.cmd run test:ui
+npm.cmd run test:frontend
 npm.cmd run test:bonus
 ```
+
+As partes estão nas pastas [Desafio API 1](desafio-api-1/README.md) e [Desafio Frontend 2](desafio-frontend-2/README.md). O comando `test:ui` continua disponível como alternativa a `test:frontend`.
 
 Para executar somente o formulário:
 
@@ -61,7 +63,7 @@ Para executar somente o formulário:
 npm.cmd run test:ui -- --name "Enviar o formulário completo"
 ```
 
-Cada execução substitui o relatório anterior pelo resultado dos cenários selecionados.
+As execuções por parte geram seus próprios relatórios, sem substituir o relatório da outra parte. `npm.cmd test` gera o relatório da suíte completa.
 
 ## 5. Consultar o relatório
 
@@ -73,20 +75,36 @@ Start-Process .\reports\cucumber.html
 
 O arquivo `reports/cucumber.json` contém o resultado em JSON. Falhas de interface incluem screenshot e logs. Os defeitos já identificados no DemoQA estão descritos em [docs/defeitos.md](docs/defeitos.md).
 
+Para abrir os resultados de cada parte:
+
+```powershell
+Start-Process .\reports\desafio-api-1.html
+Start-Process .\reports\desafio-frontend-2.html
+```
+
+Para executar as duas partes, a coleção Postman e salvar as evidências:
+
+```powershell
+$env:HEADLESS = 'false'
+npm.cmd run evidencias
+```
+
+Esse comando cria uma pasta datada em `evidencias/`, separada em `desafio-api-1` e `desafio-frontend-2`. A API tem registros das requisições com credenciais ocultadas; o frontend tem capturas de cada etapa. O [índice de evidências](evidencias/README.md) aponta para a última execução. O relatório bruto do Newman permanece em `reports/newman-interno.json`, fora do Git.
+
 ## 6. Executar no Postman
 
 1. Abra o Postman e clique em **Import**.
-2. Selecione `postman/Desafio-QA-Accenture.postman_collection.json`.
+2. Selecione `desafio-api-1/postman/Desafio-QA-Accenture.postman_collection.json`.
 3. Abra a coleção **Desafio QA Accenture — DemoQA API** e clique em **Run**.
 4. Use uma iteração e mantenha as sete requisições selecionadas, na ordem.
 5. Execute e confira as asserções.
 
-Não é necessário criar um environment nem preencher usuário, senha, token ou ISBNs. A última requisição exclui o usuário de teste. Para consultar o usuário antes de excluir, siga as [instruções da coleção](postman/README.md).
+Não é necessário criar um environment nem preencher usuário, senha, token ou ISBNs. A última requisição exclui o usuário de teste. Para consultar o usuário antes de excluir, siga as [instruções da coleção](desafio-api-1/postman/README.md).
 
 Também é possível executar a coleção pelo terminal:
 
 ```powershell
-npm.cmd exec --yes --package=newman -- newman run postman/Desafio-QA-Accenture.postman_collection.json
+npm.cmd exec --yes --package=newman -- newman run desafio-api-1/postman/Desafio-QA-Accenture.postman_collection.json
 ```
 
 ## 7. Configurações opcionais

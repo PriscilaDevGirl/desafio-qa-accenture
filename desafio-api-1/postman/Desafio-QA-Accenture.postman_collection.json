@@ -1,0 +1,607 @@
+{
+  "info": {
+    "_postman_id": "5ca72410-530a-4d9e-b332-38caf074948a",
+    "name": "Desafio QA Accenture — DemoQA API",
+    "description": "Fluxo completo do desafio: criar usuário exclusivo, gerar token, confirmar autorização, listar catálogo, reservar dois livros e consultar os detalhes. A sétima requisição exclui o usuário de teste. Execute as sete requisições na ordem pelo Collection Runner. Nenhum preenchimento manual ou environment é necessário. Os dados de autenticação são gerados na primeira requisição e não estão incluídos neste arquivo. Para inspecionar o usuário depois da execução, desmarque somente a requisição 07 no Runner e execute-a manualmente ao terminar. Em caso de falha, o fluxo para; se o usuário já foi criado e o token gerado, execute 07 antes de reiniciar. Veja desafio-api-1/postman/README.md para instruções.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://demoqa.com",
+      "type": "string",
+      "description": "URL base. Pode ser substituída por uma variável de environment."
+    },
+    {
+      "key": "qaUsername",
+      "value": "",
+      "type": "string",
+      "description": "Preenchida automaticamente durante a execução."
+    },
+    {
+      "key": "qaPassword",
+      "value": "",
+      "type": "string",
+      "description": "Preenchida automaticamente durante a execução."
+    },
+    {
+      "key": "qaUserId",
+      "value": "",
+      "type": "string",
+      "description": "Preenchida automaticamente durante a execução."
+    },
+    {
+      "key": "qaToken",
+      "value": "",
+      "type": "string",
+      "description": "Preenchida automaticamente durante a execução."
+    },
+    {
+      "key": "qaIsbn1",
+      "value": "",
+      "type": "string",
+      "description": "Preenchida automaticamente durante a execução."
+    },
+    {
+      "key": "qaIsbn2",
+      "value": "",
+      "type": "string",
+      "description": "Preenchida automaticamente durante a execução."
+    }
+  ],
+  "item": [
+    {
+      "id": "bbfef103-13e6-4e72-a1b6-6f8aeaa85101",
+      "name": "01 — Criar usuário exclusivo",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "for (const key of ['qaUsername', 'qaPassword', 'qaUserId', 'qaToken', 'qaIsbn1', 'qaIsbn2']) pm.collectionVariables.unset(key);",
+              "const uniqueId = pm.variables.replaceIn('{{$guid}}');",
+              "pm.collectionVariables.set('qaUsername', 'qa_' + uniqueId);",
+              "pm.collectionVariables.set('qaPassword', 'Qa!9aA' + uniqueId);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "(function () {",
+              "let checksPassed = true;",
+              "function check(name, assertion) {",
+              "  pm.test(name, function () {",
+              "    try { assertion(); } catch (error) { checksPassed = false; throw error; }",
+              "  });",
+              "}",
+              "check('HTTP 201', () => pm.response.to.have.status(201));",
+              "let data;",
+              "check('Resposta em JSON', () => { data = pm.response.json(); });",
+              "if (checksPassed) {",
+              "check('Identificador do usuário preenchido', () => pm.expect(data.userID).to.be.a('string').and.not.empty);",
+              "check('Nome do usuário corresponde ao enviado', () => pm.expect(data.username).to.eql(pm.collectionVariables.get('qaUsername')));",
+              "check('Usuário começa sem livros', () => pm.expect(data.books).to.eql([]));",
+              "if (checksPassed) pm.collectionVariables.set('qaUserId', data.userID);",
+              "}",
+              "",
+              "if (!checksPassed) pm.execution.setNextRequest(null);",
+              "})();"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userName\": \"{{qaUsername}}\",\n  \"password\": \"{{qaPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/Account/v1/User",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "Account",
+            "v1",
+            "User"
+          ]
+        },
+        "description": "Gera nome e senha válidos a cada execução e salva o userID retornado pela API."
+      },
+      "response": []
+    },
+    {
+      "id": "bbfef103-13e6-4e72-a1b6-6f8aeaa85102",
+      "name": "02 — Gerar token de acesso",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.collectionVariables.get('qaUsername')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaUsername ausente.'); }",
+              "if (!pm.collectionVariables.get('qaPassword')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaPassword ausente.'); }",
+              "if (!pm.collectionVariables.get('qaUserId')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaUserId ausente.'); }"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "(function () {",
+              "let checksPassed = true;",
+              "function check(name, assertion) {",
+              "  pm.test(name, function () {",
+              "    try { assertion(); } catch (error) { checksPassed = false; throw error; }",
+              "  });",
+              "}",
+              "check('HTTP 200', () => pm.response.to.have.status(200));",
+              "let data;",
+              "check('Resposta em JSON', () => { data = pm.response.json(); });",
+              "if (checksPassed) {",
+              "check('Token gerado com sucesso', () => pm.expect(data.status).to.eql('Success'));",
+              "check('Token preenchido', () => pm.expect(data.token).to.be.a('string').and.not.empty);",
+              "check('Token possui expiração futura', () => pm.expect(Date.parse(data.expires)).to.be.above(Date.now()));",
+              "if (checksPassed) pm.collectionVariables.set('qaToken', data.token);",
+              "}",
+              "",
+              "if (!checksPassed) pm.execution.setNextRequest(null);",
+              "})();"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userName\": \"{{qaUsername}}\",\n  \"password\": \"{{qaPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/Account/v1/GenerateToken",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "Account",
+            "v1",
+            "GenerateToken"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "id": "bbfef103-13e6-4e72-a1b6-6f8aeaa85103",
+      "name": "03 — Confirmar autorização",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.collectionVariables.get('qaUsername')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaUsername ausente.'); }",
+              "if (!pm.collectionVariables.get('qaPassword')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaPassword ausente.'); }",
+              "if (!pm.collectionVariables.get('qaToken')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaToken ausente.'); }"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "(function () {",
+              "let checksPassed = true;",
+              "function check(name, assertion) {",
+              "  pm.test(name, function () {",
+              "    try { assertion(); } catch (error) { checksPassed = false; throw error; }",
+              "  });",
+              "}",
+              "check('HTTP 200', () => pm.response.to.have.status(200));",
+              "let data;",
+              "check('Resposta em JSON', () => { data = pm.response.json(); });",
+              "if (checksPassed) {",
+              "check('Usuário autorizado', () => pm.expect(data).to.eql(true));",
+              "}",
+              "",
+              "if (!checksPassed) pm.execution.setNextRequest(null);",
+              "})();"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userName\": \"{{qaUsername}}\",\n  \"password\": \"{{qaPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/Account/v1/Authorized",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "Account",
+            "v1",
+            "Authorized"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "id": "bbfef103-13e6-4e72-a1b6-6f8aeaa85104",
+      "name": "04 — Listar livros e selecionar dois ISBNs",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "(function () {",
+              "let checksPassed = true;",
+              "function check(name, assertion) {",
+              "  pm.test(name, function () {",
+              "    try { assertion(); } catch (error) { checksPassed = false; throw error; }",
+              "  });",
+              "}",
+              "check('HTTP 200', () => pm.response.to.have.status(200));",
+              "let data;",
+              "check('Resposta em JSON', () => { data = pm.response.json(); });",
+              "if (checksPassed) {",
+              "check('Catálogo é uma lista', () => pm.expect(data.books).to.be.an('array'));",
+              "if (checksPassed) {",
+              "  const isbns = [...new Set(data.books.map(book => book.isbn).filter(isbn => typeof isbn === 'string' && isbn.length > 0))];",
+              "  check('Há pelo menos dois ISBNs diferentes', () => pm.expect(isbns.length).to.be.at.least(2));",
+              "  if (checksPassed) {",
+              "    pm.collectionVariables.set('qaIsbn1', isbns[0]);",
+              "    pm.collectionVariables.set('qaIsbn2', isbns[1]);",
+              "  }",
+              "}",
+              "}",
+              "",
+              "if (!checksPassed) pm.execution.setNextRequest(null);",
+              "})();"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/BookStore/v1/Books",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "BookStore",
+            "v1",
+            "Books"
+          ]
+        },
+        "description": "Seleciona automaticamente os dois primeiros ISBNs distintos do catálogo, sem fixar dados de livros no arquivo."
+      },
+      "response": []
+    },
+    {
+      "id": "bbfef103-13e6-4e72-a1b6-6f8aeaa85105",
+      "name": "05 — Reservar dois livros",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.collectionVariables.get('qaUserId')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaUserId ausente.'); }",
+              "if (!pm.collectionVariables.get('qaToken')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaToken ausente.'); }",
+              "if (!pm.collectionVariables.get('qaIsbn1')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaIsbn1 ausente.'); }",
+              "if (!pm.collectionVariables.get('qaIsbn2')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaIsbn2 ausente.'); }"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "(function () {",
+              "let checksPassed = true;",
+              "function check(name, assertion) {",
+              "  pm.test(name, function () {",
+              "    try { assertion(); } catch (error) { checksPassed = false; throw error; }",
+              "  });",
+              "}",
+              "check('HTTP 201', () => pm.response.to.have.status(201));",
+              "let data;",
+              "check('Resposta em JSON', () => { data = pm.response.json(); });",
+              "if (checksPassed) {",
+              "check('Reserva contém exatamente os dois ISBNs selecionados', () => {",
+              "  pm.expect(data.books).to.be.an('array').with.lengthOf(2);",
+              "  const expected = [pm.collectionVariables.get('qaIsbn1'), pm.collectionVariables.get('qaIsbn2')].sort();",
+              "  pm.expect(data.books.map(book => book.isbn).sort()).to.eql(expected);",
+              "});",
+              "}",
+              "",
+              "if (!checksPassed) pm.execution.setNextRequest(null);",
+              "})();"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{qaToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{qaUserId}}\",\n  \"collectionOfIsbns\": [\n    {\n      \"isbn\": \"{{qaIsbn1}}\"\n    },\n    {\n      \"isbn\": \"{{qaIsbn2}}\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/BookStore/v1/Books",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "BookStore",
+            "v1",
+            "Books"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "id": "bbfef103-13e6-4e72-a1b6-6f8aeaa85106",
+      "name": "06 — Consultar usuário e validar livros reservados",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.collectionVariables.get('qaUserId')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaUserId ausente.'); }",
+              "if (!pm.collectionVariables.get('qaToken')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaToken ausente.'); }",
+              "if (!pm.collectionVariables.get('qaIsbn1')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaIsbn1 ausente.'); }",
+              "if (!pm.collectionVariables.get('qaIsbn2')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaIsbn2 ausente.'); }"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "(function () {",
+              "let checksPassed = true;",
+              "function check(name, assertion) {",
+              "  pm.test(name, function () {",
+              "    try { assertion(); } catch (error) { checksPassed = false; throw error; }",
+              "  });",
+              "}",
+              "check('HTTP 200', () => pm.response.to.have.status(200));",
+              "let data;",
+              "check('Resposta em JSON', () => { data = pm.response.json(); });",
+              "if (checksPassed) {",
+              "check('Identificador corresponde ao usuário criado', () => pm.expect(data.userId).to.eql(pm.collectionVariables.get('qaUserId')));",
+              "check('Nome corresponde ao usuário criado', () => pm.expect(data.username).to.eql(pm.collectionVariables.get('qaUsername')));",
+              "check('Usuário tem exatamente os dois livros reservados', () => {",
+              "  pm.expect(data.books).to.be.an('array').with.lengthOf(2);",
+              "  const expected = [pm.collectionVariables.get('qaIsbn1'), pm.collectionVariables.get('qaIsbn2')].sort();",
+              "  pm.expect(data.books.map(book => book.isbn).sort()).to.eql(expected);",
+              "});",
+              "}",
+              "",
+              "if (!checksPassed) pm.execution.setNextRequest(null);",
+              "})();"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{qaToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/Account/v1/User/{{qaUserId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "Account",
+            "v1",
+            "User",
+            "{{qaUserId}}"
+          ]
+        },
+        "description": "A resposta desta requisição exibe os detalhes do usuário e dos livros solicitados pelo desafio."
+      },
+      "response": []
+    },
+    {
+      "id": "bbfef103-13e6-4e72-a1b6-6f8aeaa85107",
+      "name": "07 — Limpeza: excluir usuário de teste",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.collectionVariables.get('qaUserId')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaUserId ausente.'); }",
+              "if (!pm.collectionVariables.get('qaToken')) { pm.execution.setNextRequest(null); pm.execution.skipRequest(); throw new Error('Execute as etapas anteriores: variável qaToken ausente.'); }"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "(function () {",
+              "let checksPassed = true;",
+              "function check(name, assertion) {",
+              "  pm.test(name, function () {",
+              "    try { assertion(); } catch (error) { checksPassed = false; throw error; }",
+              "  });",
+              "}",
+              "check('HTTP 204', () => pm.response.to.have.status(204));",
+              "if (checksPassed) {",
+              "check('Exclusão não retorna corpo', () => pm.expect(pm.response.text()).to.eql(''));",
+              "if (checksPassed) {",
+              "  for (const key of ['qaUsername', 'qaPassword', 'qaUserId', 'qaToken', 'qaIsbn1', 'qaIsbn2']) pm.collectionVariables.unset(key);",
+              "}",
+              "}",
+              "",
+              "if (!checksPassed) pm.execution.setNextRequest(null);",
+              "})();"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{qaToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/Account/v1/User/{{qaUserId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "Account",
+            "v1",
+            "User",
+            "{{qaUserId}}"
+          ]
+        },
+        "description": "Exclui somente o usuário exclusivo criado na etapa 01 e limpa as variáveis de autenticação. Para manter o usuário temporariamente para inspeção, desmarque esta etapa no Runner e execute-a ao terminar."
+      },
+      "response": []
+    }
+  ]
+}

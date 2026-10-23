@@ -1,0 +1,187 @@
+{
+  "title": "Desafio Frontend 2",
+  "status": "passed",
+  "exitCode": 0,
+  "scenarios": [
+    {
+      "name": "Enviar o formulário completo",
+      "status": "passed",
+      "steps": [
+        {
+          "step": "Dado que acesso \"Forms\" e o submenu \"Practice Form\"",
+          "status": "passed",
+          "durationMs": 3475
+        },
+        {
+          "step": "Quando preencho todos os campos com dados aleatórios e envio o formulário",
+          "status": "passed",
+          "durationMs": 1853
+        },
+        {
+          "step": "Então o popup apresenta os dados enviados",
+          "status": "passed",
+          "durationMs": 358
+        },
+        {
+          "step": "E consigo fechar o popup com Escape",
+          "status": "passed",
+          "durationMs": 167
+        }
+      ]
+    },
+    {
+      "name": "Validar uma nova janela",
+      "status": "passed",
+      "steps": [
+        {
+          "step": "Dado que acesso \"Alerts, Frame & Windows\" e o submenu \"Browser Windows\"",
+          "status": "passed",
+          "durationMs": 2998
+        },
+        {
+          "step": "Quando abro uma nova janela",
+          "status": "passed",
+          "durationMs": 412
+        },
+        {
+          "step": "Então a nova janela apresenta a mensagem \"This is a sample page\"",
+          "status": "passed",
+          "durationMs": 104
+        },
+        {
+          "step": "E fecho a nova janela e retorno à original",
+          "status": "passed",
+          "durationMs": 172
+        }
+      ]
+    },
+    {
+      "name": "Criar, editar e excluir um registro",
+      "status": "passed",
+      "steps": [
+        {
+          "step": "Dado que acesso \"Elements\" e o submenu \"Web Tables\"",
+          "status": "passed",
+          "durationMs": 3498
+        },
+        {
+          "step": "Quando crio um registro na tabela",
+          "status": "passed",
+          "durationMs": 1601
+        },
+        {
+          "step": "E edito os dados desse registro",
+          "status": "passed",
+          "durationMs": 1521
+        },
+        {
+          "step": "Então a tabela apresenta os dados atualizados",
+          "status": "passed",
+          "durationMs": 461
+        },
+        {
+          "step": "Quando excluo esse registro",
+          "status": "passed",
+          "durationMs": 450
+        },
+        {
+          "step": "Então esse registro não aparece mais na tabela",
+          "status": "passed",
+          "durationMs": 259
+        }
+      ]
+    },
+    {
+      "name": "Criar e excluir registros dinamicamente",
+      "status": "passed",
+      "steps": [
+        {
+          "step": "Dado que acesso \"Elements\" e o submenu \"Web Tables\"",
+          "status": "passed",
+          "durationMs": 3308
+        },
+        {
+          "step": "Quando crio 12 registros exclusivos dinamicamente",
+          "status": "passed",
+          "durationMs": 14305
+        },
+        {
+          "step": "Então todos os 12 registros estão presentes",
+          "status": "passed",
+          "durationMs": 2467
+        },
+        {
+          "step": "Quando excluo todos os registros que criei",
+          "status": "passed",
+          "durationMs": 2737
+        },
+        {
+          "step": "Então nenhum dos registros criados permanece na tabela",
+          "status": "passed",
+          "durationMs": 2137
+        }
+      ]
+    },
+    {
+      "name": "Parar e reiniciar a barra de progresso",
+      "status": "passed",
+      "steps": [
+        {
+          "step": "Dado que acesso \"Widgets\" e o submenu \"Progress Bar\"",
+          "status": "passed",
+          "durationMs": 3397
+        },
+        {
+          "step": "Quando inicio e paro a barra antes de vinte e cinco por cento",
+          "status": "passed",
+          "durationMs": 1386
+        },
+        {
+          "step": "Então a barra está parada com valor menor ou igual a vinte e cinco",
+          "status": "passed",
+          "durationMs": 163
+        },
+        {
+          "step": "Quando reinicio a barra e aguardo cem por cento",
+          "status": "passed",
+          "durationMs": 9554
+        },
+        {
+          "step": "E reseto a barra de progresso",
+          "status": "passed",
+          "durationMs": 586
+        },
+        {
+          "step": "Então a barra volta a zero",
+          "status": "passed",
+          "durationMs": 165
+        }
+      ]
+    },
+    {
+      "name": "Ordenar elementos com drag and drop",
+      "status": "passed",
+      "steps": [
+        {
+          "step": "Dado que acesso \"Interactions\" e o submenu \"Sortable\"",
+          "status": "passed",
+          "durationMs": 3419
+        },
+        {
+          "step": "Quando ordeno os elementos com drag and drop",
+          "status": "passed",
+          "durationMs": 4640
+        },
+        {
+          "step": "Então os elementos aparecem em ordem crescente",
+          "status": "passed",
+          "durationMs": 124
+        }
+      ]
+    }
+  ],
+  "totalScenarios": 6,
+  "passedScenarios": 6,
+  "totalSteps": 28,
+  "passedSteps": 28
+}
